@@ -117,14 +117,19 @@ def build_tools() -> List[Dict[str, Any]]:                 # ✏️ Build 1, ste
                 "type": "object",
                 "properties": {
                     "flight_no": {"type": "string"},
-                    "date": {"type": "string", "description": "MM/DD/YYYY"},
+                    "date": {"type": "string", "description": "ISO date, YYYY-MM-DD, local to the airport in flight_no's schedule."},
                 },
                 "required": ["flight_no", "date"],
             },
         },
         {
             "name": "search_alternatives",
-            "description": "search",
+            "description": (
+                "Find alternative Larkspur flights for the disrupted segment on this "
+                "booking's PNR alone (never a route you were just told in chat). Returns "
+                "ranked options filtered by cabin and party size, excluding the original "
+                "flight."
+            ),
             "input_schema": {
                 "type": "object",
                 "properties": {"pnr": {"type": "string"}},
