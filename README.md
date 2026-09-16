@@ -103,3 +103,51 @@ leaves your laptop.
 
 If you cannot explain a turn on your own trace (`python3 run.py <PNR>
 --trace`), you have not finished the step, whatever the gate says.
+
+## Build 1 evidence
+
+[PITCH.md](PITCH.md#build-1-verification-record---2026-09-16) records the original
+five-shape baseline, the retrospective four-fault review, and the distinction
+between saved gate codes, local checks, and fresh live verification.
+Fresh verification is currently blocked by unavailable API authentication;
+the configured application model is not proof of who authored the fixes.
+
+On Windows, use UTF-8 for the gate's check marks and generated readout:
+
+```powershell
+$env:PYTHONIOENCODING = "utf-8"
+.\.venv\Scripts\python.exe -X utf8 verify.py 1.2
+```
+
+Run from the repository folder after configuring authentication locally using
+the setup instructions. Do not paste credentials into chat or commit them.
+
+## Build 2: local availability tool
+
+Step 2.1 registers `next_available_day` in `EXTRA_TOOLS` and `LOCAL_TOOLS`.
+The shared customer question is in [build2_probe.txt](build2_probe.txt).
+The tool checks one passenger's earliest available date, not whole-party
+capacity, and makes no hold or booking.
+
+Put your personal key in the ignored `.env` file at the repository root:
+
+```dotenv
+ANTHROPIC_API_KEY=your-personal-key
+```
+
+The application loads this into its process environment automatically; no
+machine-wide environment change is needed. Save as UTF-8 without a BOM.
+An existing environment variable takes precedence over this file.
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m unittest test_agent -v
+.\.venv\Scripts\python.exe -X utf8 run.py --show-tools
+.\.venv\Scripts\python.exe -X utf8 run.py K7PQ2M --trace --message "When is the first day I can actually fly?"
+.\.venv\Scripts\python.exe -X utf8 run.py --tool-tax
+.\.venv\Scripts\python.exe -X utf8 run.py --all --trace
+.\.venv\Scripts\python.exe -X utf8 verify.py 2.1
+```
+
+Preserve the Build 1 baseline in [PITCH.md](PITCH.md) when recording Build 2
+measurements. Unit tests do not prove that Claude chose the tool; only the
+live probe and gate establish that.
