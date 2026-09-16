@@ -2,6 +2,28 @@
 
 Six lines and a lever. Your words. The last two are scored.
 
+## Current participant and evidence
+
+Participant: **Vaibhav Agarwal**. All five gates were rerun successfully
+under this corrected name on 2026-09-16; use these codes instead of the
+earlier Room 14 codes in the historical records below.
+
+| Gate | Evidence code | Live result |
+| --- | --- | --- |
+| 1.2 | 5AD-037 | 4 API turns, 3 tool calls, final end_turn and non-empty text |
+| 1.3 | 746-C60 | Nine original tools present; flight status returned data |
+| 1.4 | 848-424 | All five shapes resolved with at least one tool call |
+| 2.1 | ADD-651 | Local next_available_day chosen on attempt 1; non-empty text |
+| 2.2 | 339-EB9 | MCP next_available_day chosen on attempt 1; no duplicate ownership |
+
+Gate 2.1 was rerun on the exact local agent from `3466528`, then the final
+MCP agent was restored and the other four gates were rerun on it. The
+corrected-name local probe consumed 9,980 input tokens across 2 tool calls;
+the MCP probe consumed 11,267 across 2. Schema counts remain 2,471 and 2,877.
+Historical baseline and sweep measurements below have not been relabelled
+as new runs. The Git push failed because GitHub authentication could not
+prompt; publication remains pending until Git credentials are configured.
+
 ## Build 2 live evidence - 2026-09-16
 
 Authentication is now configured in the ignored local `.env`; it loaded

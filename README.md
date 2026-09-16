@@ -126,7 +126,8 @@ the setup instructions. Do not paste credentials into chat or commit them.
 ## Build 2: availability tool over MCP
 
 Step 2.1's local implementation is preserved in commit `3466528`. After
-authentication was configured, that exact agent passed gate 2.1 (`88C-AFB`).
+authentication was configured, that exact agent passed gate 2.1. Its current
+code, re-banked for **Vaibhav Agarwal**, is `ADD-651`.
 Step 2.2 now discovers `next_available_day` and `fare_rules` through
 `mcp_client.tools()`. There is no duplicate local schema or registration:
 the server owns both names, and the original nine tools are unchanged.
@@ -162,6 +163,8 @@ Gate 2.1 checks a local registration, so it must be run on the local
 checkpoint, not on the migrated MCP version. Do not reinstate a local copy
 alongside MCP merely to make both gates pass on the same file.
 
-Verified live codes: 2.1 `88C-AFB`, 2.2 `6B2-926`. The final five-shape
+Verified live codes for **Vaibhav Agarwal**: 2.1 `ADD-651`, 2.2 `339-EB9`.
+Build 1 was also reverified: 1.2 `5AD-037`, 1.3 `746-C60`, 1.4 `848-424`.
+The final five-shape
 MCP sweep returned text for 5/5, with 19 turns and 76,340 input tokens.
 The demo API also answered the shared question using `next_available_day`.
