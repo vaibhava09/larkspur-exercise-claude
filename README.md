@@ -109,8 +109,9 @@ If you cannot explain a turn on your own trace (`python3 run.py <PNR>
 [PITCH.md](PITCH.md#build-1-verification-record---2026-09-16) records the original
 five-shape baseline, the retrospective four-fault review, and the distinction
 between saved gate codes, local checks, and fresh live verification.
-Fresh verification is currently blocked by unavailable API authentication;
-the configured application model is not proof of who authored the fixes.
+That earlier audit was blocked by unavailable API authentication. Authentication
+was subsequently configured and Build 2 gates passed; see the newer live evidence
+in [PITCH.md](PITCH.md). The configured model is not proof of code authorship.
 
 On Windows, use UTF-8 for the gate's check marks and generated readout:
 
@@ -122,9 +123,13 @@ $env:PYTHONIOENCODING = "utf-8"
 Run from the repository folder after configuring authentication locally using
 the setup instructions. Do not paste credentials into chat or commit them.
 
-## Build 2: local availability tool
+## Build 2: availability tool over MCP
 
-Step 2.1 registers `next_available_day` in `EXTRA_TOOLS` and `LOCAL_TOOLS`.
+Step 2.1's local implementation is preserved in commit `3466528`. After
+authentication was configured, that exact agent passed gate 2.1 (`88C-AFB`).
+Step 2.2 now discovers `next_available_day` and `fare_rules` through
+`mcp_client.tools()`. There is no duplicate local schema or registration:
+the server owns both names, and the original nine tools are unchanged.
 The shared customer question is in [build2_probe.txt](build2_probe.txt).
 The tool checks one passenger's earliest available date, not whole-party
 capacity, and makes no hold or booking.
@@ -145,9 +150,18 @@ An existing environment variable takes precedence over this file.
 .\.venv\Scripts\python.exe -X utf8 run.py K7PQ2M --trace --message "When is the first day I can actually fly?"
 .\.venv\Scripts\python.exe -X utf8 run.py --tool-tax
 .\.venv\Scripts\python.exe -X utf8 run.py --all --trace
-.\.venv\Scripts\python.exe -X utf8 verify.py 2.1
+.\.venv\Scripts\python.exe -X utf8 support\mcp_selftest.py
+.\.venv\Scripts\python.exe -X utf8 verify.py 2.2
 ```
 
 Preserve the Build 1 baseline in [PITCH.md](PITCH.md) when recording Build 2
 measurements. Unit tests do not prove that Claude chose the tool; only the
 live probe and gate establish that.
+
+Gate 2.1 checks a local registration, so it must be run on the local
+checkpoint, not on the migrated MCP version. Do not reinstate a local copy
+alongside MCP merely to make both gates pass on the same file.
+
+Verified live codes: 2.1 `88C-AFB`, 2.2 `6B2-926`. The final five-shape
+MCP sweep returned text for 5/5, with 19 turns and 76,340 input tokens.
+The demo API also answered the shared question using `next_available_day`.
